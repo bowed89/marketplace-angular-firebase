@@ -1,0 +1,74 @@
+<!--=====================================
+	Section Gray
+	======================================-->
+
+<div class="ps-section--gray">
+
+    <div *ngIf="!preload" class="container">
+
+        <!--=====================================
+			Products of category
+			======================================-->
+
+        <div *ngFor="let category of categories; let lastIndex = last; let i = index" class="ps-block--products-of-category">
+
+            <!--=====================================
+				Menu subcategory
+				======================================-->
+
+            <div class="ps-block__categories">
+
+                <h3>{{ category.name }}</h3>
+
+                <ul [attr.category-showcase]="category.name">
+
+                    <!-- Acá pintara los nombres de subcategorias desde el component.ts -->
+
+                </ul>
+
+                <a class="ps-block__more-link" routerLink="products/{{ category.url }}">View All</a>
+
+            </div>
+
+            <!--=====================================
+				Vertical Slider Category
+			======================================-->
+
+            <div class="ps-block__slider">
+
+                <div [attr.category-sl]="category.url">
+
+                    <!-- Acá pintara las imgs del slider vertical desde el component.ts -->
+
+                </div>
+
+            </div>
+
+            <!--=====================================
+				Block Product Box
+				======================================-->
+
+            <div class="ps-block__product-box" [attr.category-pb]="category.url">
+
+                <!-- Acá pintara los productos  desde el component.ts -->
+
+
+            </div>
+            <!-- End Block Product Box -->
+
+            {{ lastIndex ? callback(i) : "" }}
+
+        </div>
+        <!-- End Products of category -->
+
+
+    </div>
+    <!-- End Container-->
+
+    <!-- Si el preload aun esta iniciando y el top_banner no contiene cargado el objeto se muestra un spinner de cargando  -->
+    <div *ngIf="preload" class="d-flex justify-content-center">
+        <div class="spinner-border text-muted my-5"></div>
+    </div>
+
+</div>
+<!-- End Section Gray-->

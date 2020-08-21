@@ -1,0 +1,130 @@
+<!--=====================================
+Breadcrumb
+======================================-->  
+
+<div class="ps-breadcrumb">
+
+    <div class="container">
+
+        <ul class="breadcrumb">
+
+            <li><a href="index.html">Home</a></li>
+
+            <li>Register</li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+<!--=====================================
+Login - Register Content
+======================================--> 
+
+<div class="ps-my-account">
+
+    <div class="container">
+
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="ps-form--account ps-tab-root needs-validation" novalidate>
+
+            <ul class="ps-tab-list">
+
+                <li class="">
+                    <p><a href="login">Login</a></p>           
+                </li>
+
+                <li class="active">
+                    <p><a href="register">Register</a></p>
+                </li>
+
+            </ul>
+
+            <div class="ps-tabs">
+                
+                <!--=====================================
+                Register Form
+                ======================================--> 
+
+                <div class="ps-tab active" id="register">
+
+                    <div class="ps-form__content">
+
+                        <h5>Register An Account</h5>
+
+                        <div class="form-group">
+
+                            <input class="form-control" type="text" placeholder="First name" [(ngModel)]="user.first_name" name="first_name" #first_name (change)="capitalize(first_name)" required>
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div *ngIf="f.submitted && f.controls['first_name'].errors" class="invalid-feedback">Please fill out this field.</div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <input class="form-control" type="text" placeholder="Last name" [(ngModel)]="user.last_name" name="last_name" #last_name (change)="capitalize(last_name)" required>
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div *ngIf="f.submitted && f.controls['last_name'].errors" class="invalid-feedback">Please fill out this field.</div>
+
+                        </div>
+                        
+                        <div class="form-group">
+
+                            <input class="form-control" type="email" placeholder="Email address" [(ngModel)]="user.email" name="email" email required>
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div *ngIf="f.submitted && f.controls['email'].errors" class="invalid-feedback">Please fill out this field.</div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <input class="form-control" type="text" placeholder="Username" [(ngModel)]="user.username" name="username" required minlength="2" maxlength="8" pattern="[A-Za-z]{2,8}" data-toggle="tooltip" title="Enter your username with at least 2 characters, maximun 8 characters" (change)="validate(username)" #username > 
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div *ngIf="f.submitted && f.controls['username'].errors" class="invalid-feedback">Please fill out this field.</div>
+                            
+                        </div>
+
+
+                        <div class="form-group">
+                            <!-- (?=.*\d): minimo un numero, (?=.*[a-z]) minimo una letra minuscula, (?=.*[A-Z]) minimo una letra mayuscula, .{4,} minimo 4 caracteres  -->
+                            <input class="form-control" type="password" placeholder="Password" [(ngModel)]="user.password" name="password" required minlength="4" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}" data-toggle="tooltip" title="Enter your password with at least 4 characters and must include uppercase, lowecase letters and numbers"  (change)="validate(password)" #password>
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div *ngIf="f.submitted && f.controls['password'].errors" class="invalid-feedback">Please fill out this field.</div>
+
+                        </div>
+
+                        <div class="form-group submtit">
+
+                            <button class="ps-btn ps-btn--fullwidth">Register</button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="ps-form__footer">
+
+                        <p>Connect with:</p>
+
+                        <ul class="ps-list--social">
+
+                            <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a class="google" href="#"><i class="fab fa-google"></i></a></li>
+
+                        </ul>
+
+                    </div>
+
+                </div><!-- End Register Form -->
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

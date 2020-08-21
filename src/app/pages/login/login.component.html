@@ -1,0 +1,118 @@
+<!--=====================================
+                Breadcrumb
+======================================-->  
+
+<div class="ps-breadcrumb">
+
+    <div class="container">
+
+        <ul class="breadcrumb">
+
+            <li><a href="index.html">Home</a></li>
+
+            <li>Login</li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+<!--=====================================
+        Login - Register Content
+======================================--> 
+
+<div class="ps-my-account">
+
+    <div class="container">
+
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="ps-form--account ps-tab-root needs-validation" novalidate>
+
+            <ul class="ps-tab-list">
+
+                <li class="active">
+                    <p><a href="login">Login</a></p>
+                </li>
+
+                <li class="">
+                    <p><a href="register">Register</a></p>
+                </li>
+
+            </ul>
+
+            <div class="ps-tabs">
+
+                <!--=====================================
+                                Login Form
+                ======================================--> 
+
+                <div class="ps-tab active" id="sign-in">
+
+                    <div class="ps-form__content">
+
+                        <h5>Log In Your Account</h5>
+
+                        <div class="form-group">
+
+                            <input class="form-control" type="text" placeholder="Email address" [(ngModel)]="user.email"  name="email" #email required> 
+        
+                            <div class="valid-feedback">Valid.</div>
+                            <div *ngIf="f.submitted && f.controls['email'].errors" class="invalid-feedback">Please fill out this field.</div>
+
+                        </div>
+
+                        <div class="form-group form-forgot">
+
+                            <input class="form-control" type="password" placeholder="Password"  [(ngModel)]="user.password"  name="password" #password required>
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div *ngIf="f.submitted && f.controls['password'].errors" class="invalid-feedback">Please fill out this field.</div>
+
+                            <a href="">Forgot?</a>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="ps-checkbox">
+
+                                <input class="form-control" type="checkbox" id="remember-me" name="remember-me">
+
+                                <label for="remember-me">Rememeber me</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group submtit">
+
+                            <button class="ps-btn ps-btn--fullwidth">Login</button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="ps-form__footer">
+
+                        <p>Connect with:</p>
+
+                        <ul class="ps-list--social">
+
+                            <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a class="google" href="#"><i class="fab fa-google"></i></a></li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+                
+                <!-- End Login Form -->
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
