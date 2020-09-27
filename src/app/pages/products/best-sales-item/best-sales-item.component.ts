@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../../config';
-
-import { OwlCarouselConfig, CarouselNavigation, Rating, DinamicRating, DinamicReviews, DinamicPrice } from '../../../functions';
+import { OwlCarouselConfig, CarouselNavigation, Rating, DinamicRating, DinamicReviews, DinamicPrice, SweetAlert } from '../../../functions';
 
 import { ProductsService } from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
+import { UsersService } from '../../../services/users.service';
+import { ClassField } from '@angular/compiler';
 
 @Component({
   selector: 'app-best-sales-item',
@@ -23,7 +24,8 @@ export class BestSalesItemComponent implements OnInit {
 
   constructor(
     private _productsService: ProductsService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private _usersService: UsersService
   ) { }
 
   ngOnInit(): void {
@@ -115,8 +117,13 @@ export class BestSalesItemComponent implements OnInit {
 
 
   }
+  // Funcion para agregar productos a la lista de deseos
+  // product: al hacer click en los corazones obtenemos la url de los productos
+  addWishList(product) {
 
+    this._usersService.addWishlist(product);
 
+  }
 
 
 }

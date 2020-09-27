@@ -3,6 +3,7 @@ import { Path } from '../../config';
 import { CategoriesService } from '../../services/categories.service';
 import { SubCategoriesService } from '../../services/sub-categories.service';
 import { Search } from '../../functions';
+import { UsersService } from '../../services/users.service';
 
 declare var jQuery: any;
 declare var $: any;
@@ -18,13 +19,54 @@ export class HeaderMobileComponent implements OnInit {
   categories:object = null;
   render:boolean = true;
   categoriesList:any[] = [];
+  picture:string;
+  authValidate:boolean = false;
 
   constructor(
     private _categoriesService: CategoriesService,
-    private _subCategoriesService: SubCategoriesService
+    private _subCategoriesService: SubCategoriesService,
+    private _usersService: UsersService
     ) { }
 
   ngOnInit(): void {
+    
+    // Validar si existe usuario autenticado
+    this._usersService.authActivate().then(resp => {
+
+      if(resp){
+
+        this.authValidate = true;
+
+        this._usersService.getFilterData("idToken", localStorage.getItem("idToken")).subscribe(resp => {
+
+          for(let i in resp){
+
+            if(resp[i].picture != undefined){
+
+              // Si el usuario esta registrado por Facebook o Google
+              if(resp[i].method != "direct"){
+
+                this.picture = `<img src="${resp[i].picture}" class="img-fluid rounded-circle w-50 ml-auto">`;
+
+              } else{
+
+                this.picture = `<img src="assets/img/users/${resp[i].username}/${resp[i].picture}" class="img-fluid rounded-circle ml-auto">`;
+
+              }
+
+            } else{
+
+              this.picture = `<i class="icon-user"></i>`;
+
+            }
+
+          }
+
+        });
+
+      } 
+    });
+
 
     this._categoriesService.getData().subscribe(resp => {
 

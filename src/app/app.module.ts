@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-rounting.module';
 
 import { FormsModule } from '@angular/forms';
-
+import { DataTablesModule } from 'angular-datatables';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 // Peticiones Http para comunicarse con el backend
 import { HttpClientModule } from '@angular/common/http';
+
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './modules/header/header.component';
@@ -43,6 +45,10 @@ import { SimilarBougthComponent } from './pages/product/similar-bougth/similar-b
 import { RelatedProductComponent } from './pages/product/related-product/related-product.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AccountComponent } from './pages/account/account.component';
+import { AccountBreadcrumbComponent } from './pages/account/account-breadcrumb/account-breadcrumb.component';
+import { AccountProfileComponent } from './pages/account/account-profile/account-profile.component';
+import { AccountWishlistComponent } from './pages/account/account-profile/account-wishlist/account-wishlist.component';
 
 @NgModule({
   declarations: [
@@ -80,13 +86,19 @@ import { RegisterComponent } from './pages/register/register.component';
     SimilarBougthComponent,
     RelatedProductComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AccountComponent,
+    AccountBreadcrumbComponent,
+    AccountProfileComponent,
+    AccountWishlistComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    DataTablesModule,
+    ConfirmationPopoverModule.forRoot({confirmButtonType: 'danger'})
   ],
   providers: [],
   bootstrap: [AppComponent]

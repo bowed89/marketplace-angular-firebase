@@ -141,7 +141,10 @@
 						======================================-->
 
                     <a class="header__extra" href="#">
-                        <i class="icon-heart"></i><span><i>0</i></span>
+                        <i class="icon-heart"></i>
+                        <span>
+                            <i class="totalWishlist">{{ wishlist }}</i>
+                        </span>
                     </a>
 
                     <!--=====================================
@@ -212,19 +215,43 @@
 
                     </div>
 
-                    <!--=====================================
-						Login and Register
-						======================================-->
+                    <!--==========================================
+						Login and Register: Sino está autenticado
+					============================================-->
 
-                    <div class="ps-block--user-header">
+                    <div *ngIf="!authValidate" class="ps-block--user-header">
+
                         <div class="ps-block__left">
                             <i class="icon-user"></i>
                         </div>
+
                         <div class="ps-block__right">
                             <a routerLink="login">Login</a>
                             <a routerLink="register">Register</a>
                         </div>
+
                     </div>
+
+                    
+                    <!--========================================
+						Login and Register: Si está autenticado
+                    =========================================-->
+                    
+                    <div *ngIf="authValidate" class="ps-block--user-header">
+
+                        <div class="ps-block__left text-right">
+                            <a routerLink="account">
+                                <div [innerHTML]="picture" style="width: 40px"></div>
+                            </a>
+                        </div>
+
+                        <div class="ps-block__right">
+                            <a routerLink="account">My Account</a>
+                        </div>
+
+                    </div>
+
+
 
                 </div>
                 <!-- End Header Actions-->

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../../config';
 import { ActivatedRoute } from '@angular/router';
+
 import { ProductsService } from '../../../services/products.service';
+import { UsersService } from '../../../services/users.service';
+
 import { DinamicRating, DinamicReviews, DinamicPrice, Rating, OwlCarouselConfig, CarouselNavigation } from '../../../functions';
 
 @Component({
@@ -22,7 +25,8 @@ export class RelatedProductComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private _productsService: ProductsService
+    private _productsService: ProductsService,
+    private _usersService: UsersService
     
     ) { }
 
@@ -107,6 +111,14 @@ export class RelatedProductComponent implements OnInit {
       }, 1000);
 
     }
+
+  }
+      
+  // Funcion para agregar productos a la lista de deseos
+  // product: al hacer click en los corazones obtenemos la url de los productos
+  addWishList(product) {
+    
+    this._usersService.addWishlist(product);
 
   }
 

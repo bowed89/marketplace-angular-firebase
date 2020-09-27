@@ -1,0 +1,117 @@
+<!--=====================================
+Nav Account
+======================================--> 
+
+<div class="ps-section__content">
+
+    <ul class="ps-section__links">
+        <li  class="active"><a href=my-account_wishlist.html>My Wishlist</a></li>
+        <li><a href="my-account_my-shopping.html">My Shopping</a></li>
+        <li><a href="my-account_new-store.html">My Store</a></li>
+        <li><a href="my-account_my-sales.html">My Sales</a></li>
+    </ul>
+
+    <!--=====================================
+    Wishlist
+    ======================================--> 
+
+    <div class="table-responsive">
+
+        <table class="table ps-table--whishlist dt-responsive" datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions"> 
+
+            <thead>
+
+                <tr>               
+
+                    <th>Product name</th>
+
+                    <th>Unit Price</th>
+
+                    <th>Stock Status</th>
+
+                    <th></th>
+
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngIf="products.length == 0">
+
+                    <td colspan="3" class="text-center">You haven't products in the wishlist yet!</td>
+
+                </tr>
+
+                <!-- Product -->
+
+                <tr *ngFor="let product of products; let i = index; let lastIndex = last">
+
+                    <td>
+
+                        <div class="ps-product--cart">
+
+                            <div class="ps-product__thumbnail">
+
+                                <a href="product/{{product.url}}">
+                                    <img src="{{path}}img/products/{{product.category}}/{{product.image}}" alt="{{product.name}}">
+                                </a>
+
+                            </div>
+
+                            <div class="ps-product__content">
+                                <a href="product/{{product.url}}">
+                                    {{product.name}}
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <td class="ps-product">
+
+                        <div [innerHTML]="price[i][0]"></div>
+
+                    </td>
+
+                    <td>
+
+                        <div [innerHTML]="stock[i]"></div>
+
+                    </td>
+
+                    <td>
+                        <a *ngIf="product.stock > 0" class="ps-btn" href="#">
+                            Add to cart
+                        </a>
+                    </td>
+
+                    <td>
+                        <a 
+                            mwlConfirmationPopover 
+                            [popoverMessage]="popoverMessage" 
+                            placement="left" 
+                            [attr.remove]="product.url" 
+                            class="removeProduct" 
+                            style="cursor: pointer;" 
+                            (confirm)="removeProduct(product.url)">
+
+                            <i class="icon-cross"></i>
+                        
+                        </a>
+                    </td>
+
+                    {{ lastIndex ? callback() : "" }}
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

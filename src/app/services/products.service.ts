@@ -50,4 +50,11 @@ export class ProductsService {
 
   }
 
+    // Tomar informacion de un solo producto
+    getUniqueData(id:string) {
+
+      return this.http.get(`${this.api}products/${id}.json`);
+  
+    }
+
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 import { Capitalize, SweetAlert } from '../../functions';
 
@@ -162,6 +164,195 @@ export class RegisterComponent implements OnInit {
 
     })
 
+  }
+
+  // Registro con FACEBOOK
+  facebookRegister() {
+
+    let localUsersService = this._usersService;
+    let localUser = this.user;
+
+    // https://firebase.google.com/docs/web/setup
+    // Creamos una nueva APP WEB en Settings en Firebase
+    // npm install --save firebase
+    // Agrergamos: import * as firebase from "firebase/app";
+    // import "firebase/auth";
+
+    // Inicializamos Firebase en la app web:
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCtsiPNMzYbiniOxpWpCDtbbcfW20CzPrY",
+      authDomain: "marketplace-9bcb8.firebaseapp.com",
+      databaseURL: "https://marketplace-9bcb8.firebaseio.com",
+      projectId: "marketplace-9bcb8",
+      storageBucket: "marketplace-9bcb8.appspot.com",
+      messagingSenderId: "216016160895",
+      appId: "1:216016160895:web:fc57ca7862cb0f169e174a"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // https://firebase.google.com/docs/auth/web/facebook-login
+
+    // Crear una instancia del objecto proveedor de facebook
+    var provider = new firebase.auth.FacebookAuthProvider();
+
+    // Accedemos con una ventana emergente y con certificado SSL (https)
+    // https://fmoralesdev.com/2020/01/03/serve-angular-app-over-https-using-angular-cli/
+    // ng serve --ssl true -o --sslKey ssl/server.key --sslCert ssl/server.crt
+
+    // Accedemos a una ventana emergente
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      
+      registerFirebaseDataBase(result, localUser, localUsersService);
+
+     
+    }).catch(function(error) {
+      
+      var errorMessage = error.message;
+
+      SweetAlert.fnc("error", errorMessage, "register");
+     
+    });
+
+    function registerFirebaseDataBase(result, localUser, localUsersService) {
+
+      var user = result.user;
+
+      // si existe valores en user.P y es true
+      if(user.P) {
+
+          localUser.displayName = user.displayName;
+          localUser.email = user.email;
+          localUser.idToken = user.b.b.g;
+          localUser.method = "facebook";
+          localUser.username = user.email.split('@')[0];
+          localUser.picture = user.photoURL;
+
+        // Evitar que se dupliquen los registros en la DB Firebase
+        localUsersService.getFilterData("email", user.email).subscribe(resp => {
+
+          if(Object.keys(resp).length > 0) {
+
+            SweetAlert.fnc("error", `You're already signed in, please login with ${ resp[Object.keys(resp)[0]].method } method`, "login");
+
+          } else {
+            
+            // Registramos los datos de usersModel en la DB
+            localUsersService.registerDatabase(localUser).subscribe(resp => {
+
+              if(resp["name"] != "") {
+
+                SweetAlert.fnc("success", "Please login with Facebook", "login");
+
+              }
+      
+              console.log('resp', resp)
+
+            });
+
+          }
+
+        })
+        
+      }
+     
+    }
+
+
+  }
+
+  // Registro con GOOGLE
+  googleRegister() {
+
+    let localUsersService = this._usersService;
+    let localUser = this.user;
+
+    // https://firebase.google.com/docs/web/setup
+    // Creamos una nueva APP WEB en Settings en Firebase
+    // npm install --save firebase
+    // Agrergamos: import * as firebase from "firebase/app";
+    // import "firebase/auth";
+
+    // Inicializamos Firebase en la app web:
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCtsiPNMzYbiniOxpWpCDtbbcfW20CzPrY",
+      authDomain: "marketplace-9bcb8.firebaseapp.com",
+      databaseURL: "https://marketplace-9bcb8.firebaseio.com",
+      projectId: "marketplace-9bcb8",
+      storageBucket: "marketplace-9bcb8.appspot.com",
+      messagingSenderId: "216016160895",
+      appId: "1:216016160895:web:fc57ca7862cb0f169e174a"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // https://firebase.google.com/docs/auth/web/google-signin
+
+    // Crear una instancia del objecto proveedor de Google
+    var provider = new firebase.auth.GoogleAuthProvider();
+    
+    // Accedemos a una ventana emergente
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      
+      registerFirebaseDataBase(result, localUser, localUsersService);
+
+     
+    }).catch(function(error) {
+      
+      var errorMessage = error.message;
+
+      SweetAlert.fnc("error", errorMessage, "register");
+     
+    });
+
+    function registerFirebaseDataBase(result, localUser, localUsersService) {
+
+      var user = result.user;
+
+      // si existe valores en user.P y es true
+      if(user.P) {
+
+          localUser.displayName = user.displayName;
+          localUser.email = user.email;
+          localUser.idToken = user.b.b.g;
+          localUser.method = "google";
+          localUser.username = user.email.split('@')[0];
+          localUser.picture = user.photoURL;
+
+        // Evitar que se dupliquen los registros en la DB Firebase
+        localUsersService.getFilterData("email", user.email).subscribe(resp => {
+
+          if(Object.keys(resp).length > 0) {
+
+            SweetAlert.fnc("error", `You're already signed in, please login with ${ resp[Object.keys(resp)[0]].method } method`, "login");
+
+          } else {
+            
+            // Registramos los datos de usersModel en la DB
+            localUsersService.registerDatabase(localUser).subscribe(resp => {
+
+              if(resp["name"] != "") {
+
+                SweetAlert.fnc("success", "Please login with Google+", "login");
+
+              }
+      
+              console.log('resp', resp)
+
+            });
+
+          }
+
+        })
+        
+      }
+     
+    }
+  
   }
 
 }

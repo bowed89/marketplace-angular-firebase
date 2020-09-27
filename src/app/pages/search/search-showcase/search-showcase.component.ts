@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Path } from '../../../config';
 import { ProductsService } from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
+import { UsersService } from '../../../services/users.service';
 
 import { Rating, DinamicRating, DinamicReviews, DinamicPrice, Pagination, Select2Cofig, Tabs } from '../../../functions';
 
@@ -39,7 +40,9 @@ export class SearchShowcaseComponent implements OnInit {
 
   constructor(
     private _productsService: ProductsService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private _usersService: UsersService
+
   ) {}
 
   ngOnInit(): void {
@@ -318,6 +321,14 @@ export class SearchShowcaseComponent implements OnInit {
       });
 
     }
+
+  }
+
+  // Funcion para agregar productos a la lista de deseos
+  // product: al hacer click en los corazones obtenemos la url de los productos
+  addWishList(product) {
+    
+    this._usersService.addWishlist(product);
 
   }
 
